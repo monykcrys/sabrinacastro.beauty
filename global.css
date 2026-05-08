@@ -1,0 +1,320 @@
+/* ============================================================
+   GLOBAL.CSS – Sabrina Rückert · Design de Sobrancelhas
+   Variáveis, reset, navbar, footer, botões, utilitários
+   ============================================================ */
+
+/* --- VARIÁVEIS DE COR (paleta do site) --- */
+:root {
+  --marrom-cafe:   #6B4A2E;
+  --marrom-avela:  #8C6239;
+  --gold:          #D4AF37;
+  --gold-soft:     #E6C98A;
+  --bege-quente:   #EADBC1;
+  --bege-claro:    #F5EFE3;
+
+  /* Derivados para uso */
+  --dark:          #1a1108;
+  --text-dark:     #2e1f0d;
+  --text-mid:      #5a3e1b;
+  --text-light:    #8C6239;
+  --white:         #ffffff;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Jost', sans-serif;
+
+  --radius: 4px;
+  --transition: 0.3s ease;
+}
+
+/* --- RESET --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bege-claro);
+  color: var(--text-dark);
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+input, select, textarea, button { font-family: var(--font-body); }
+
+/* --- TIPOGRAFIA COMPARTILHADA --- */
+.section-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.section-eyebrow.center { text-align: center; }
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 300;
+  color: var(--marrom-cafe);
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+}
+.section-title em { font-style: italic; color: var(--gold); }
+.section-title.center { text-align: center; }
+
+/* --- NAVBAR --- */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(245, 239, 227, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  transition: var(--transition);
+}
+
+.nav-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.logo-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--marrom-cafe);
+  letter-spacing: 0.02em;
+}
+.logo-sub {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+.nav-links a {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  transition: color var(--transition);
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+.nav-links .nav-cta {
+  border: 1px solid var(--gold);
+  padding: 0.45rem 1.25rem;
+  border-radius: 2px;
+  color: var(--marrom-cafe);
+  transition: all var(--transition);
+}
+.nav-links .nav-cta:hover, .nav-links .nav-cta.active {
+  background: var(--gold);
+  color: var(--dark);
+}
+
+/* --- BOTÕES --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
+  color: var(--dark);
+}
+.btn-gold:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--marrom-cafe);
+  color: var(--marrom-cafe);
+}
+.btn-outline:hover { background: var(--marrom-cafe); color: var(--bege-claro); }
+
+.btn-outline-light {
+  background: transparent;
+  border: 1.5px solid var(--bege-quente);
+  color: var(--bege-claro);
+}
+.btn-outline-light:hover { background: var(--bege-quente); color: var(--dark); }
+
+.btn-text {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.btn-text:hover { color: var(--marrom-cafe); }
+
+.btn-small {
+  padding: 0.55rem 1.2rem;
+  font-size: 0.68rem;
+}
+
+.btn-full { width: 100%; justify-content: center; }
+
+.btn-icon { font-size: 0.6rem; }
+
+/* --- PAGE HEADER (portfolio & agendamento) --- */
+.page-header {
+  padding: 9rem 2.5rem 4rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--bege-quente) 0%, var(--bege-claro) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.page-header-deco {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 300;
+  color: var(--marrom-cafe);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.page-title em { font-style: italic; color: var(--gold); }
+.page-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  letter-spacing: 0.08em;
+}
+
+/* --- ABOUT GRID (shared) --- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.about-img-frame {
+  position: relative;
+}
+.about-img-frame img,
+.about-img-placeholder {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bege-quente);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text-mid);
+  overflow: hidden;
+}
+.about-frame-deco {
+  position: absolute;
+  bottom: -16px;
+  right: -16px;
+  width: 80%;
+  height: 80%;
+  border: 1.5px solid var(--gold-soft);
+  border-radius: 2px;
+  z-index: -1;
+}
+
+.about-bio {
+  font-size: 0.95rem;
+  color: var(--text-mid);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+/* --- CTA SECTION --- */
+.cta-section {
+  background: linear-gradient(135deg, var(--marrom-cafe) 0%, var(--marrom-avela) 100%);
+  padding: 6rem 2.5rem;
+}
+.cta-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+
+/* --- FOOTER --- */
+.footer {
+  background: var(--dark);
+  padding: 3rem 2.5rem;
+}
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer .logo-name { color: var(--bege-claro); font-size: 1rem; }
+.footer .logo-sub { color: var(--gold-soft); }
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+.footer-links a {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bege-quente);
+  transition: color var(--transition);
+}
+.footer-links a:hover { color: var(--gold); }
+
+.footer-copy {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  width: 100%;
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* --- RESPONSIVO --- */
+@media (max-width: 768px) {
+  .navbar { padding: 1rem 1.25rem; }
+  .nav-links { gap: 1rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footer-inner { justify-content: center; text-align: center; }
+  .footer-links { justify-content: center; }
+}

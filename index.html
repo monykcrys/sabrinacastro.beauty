@@ -1,151 +1,140 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sabrina Castro – Design de Sobrancelhas</title>
-  <link rel="stylesheet" href="global.css" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/global.css"/>
+  <link rel="stylesheet" href="./css/index.css"/>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="navbar">
-    <div class="nav-logo">
-      <span class="logo-name">Sabrina Castro</span>
-      <span class="logo-sub">Design de Sobrancelhas</span>
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <span class="nome">Sabrina Castro</span>
+    <span class="prof">Design de Sobrancelhas</span>
+  </a>
+  <div class="nav-links"></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-ring r1"></div>
+  <div class="hero-ring r2"></div>
+  <div class="hero-ring r3"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow" id="hero-eyebrow">Arte em cada fio</span>
+    <h1 class="hero-title" id="hero-title">Sobrancelhas que<br/><em>revelam</em> sua beleza</h1>
+    <p class="hero-sub" id="hero-sub">Design personalizado com técnica, cuidado e um olhar apurado para realçar o que há de mais único em você.</p>
+    <div class="hero-ctas">
+      <a href="portfolio.html" class="btn btn-outline">✦ Conheça meu trabalho</a>
+      <a href="agendamento.html" class="btn btn-gold">◆ Agende sua visita</a>
     </div>
-    <div class="nav-links">
-      <a href="portfolio.html">Trabalhos</a>
-      <a href="agendamento.html" class="nav-cta">Agendar</a>
+  </div>
+  <div class="scroll-hint"><span>scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<section class="about-preview">
+  <div class="about-grid reveal">
+    <div class="img-frame">
+      <div id="hero-img-wrap"></div>
+      <div class="deco"></div>
     </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg-overlay"></div>
-    <div class="hero-ornament top-left"></div>
-    <div class="hero-ornament bottom-right"></div>
-
-    <div class="hero-content">
-      <p class="hero-eyebrow">Arte em cada fio</p>
-      <h1 class="hero-title">
-        Sobrancelhas que<br/>
-        <em>revelam</em> sua beleza
-      </h1>
-      <p class="hero-subtitle">
-        Design personalizado com técnica, cuidado e um olhar apurado<br/>
-        para realçar o que há de mais único em você.
-      </p>
-
-      <div class="hero-ctas">
-        <a href="portfolio.html" class="btn btn-outline">
-          <span class="btn-icon">✦</span>
-          Conheça meu trabalho
-        </a>
-        <a href="agendamento.html" class="btn btn-gold">
-          <span class="btn-icon">◆</span>
-          Agende sua visita
-        </a>
-      </div>
+    <div>
+      <span class="eyebrow">Sobre a Designer</span>
+      <h2 class="sec-title">Olá, sou <em id="nome-sobre">Sabrina</em></h2>
+      <p class="about-bio" id="bio-curta"></p>
+      <a href="portfolio.html" style="font-size:.8rem;color:var(--gold);text-decoration:underline">Ver meu portfólio →</a>
     </div>
+  </div>
+</section>
 
-    <div class="hero-scroll-hint">
-      <span>@sabrinacastro.beauty</span>
-      <div class="scroll-line"></div>
+<section class="services-preview">
+  <span class="eyebrow center">Procedimentos</span>
+  <h2 class="sec-title center">O que ofereço</h2>
+  <div class="services-grid" id="services-grid"></div>
+</section>
+
+<section class="cta-section">
+  <span class="eyebrow center" style="color:var(--gold-soft)">Pronta para transformar?</span>
+  <h2 class="sec-title center">Agende sua visita</h2>
+  <p id="cta-horario"></p>
+  <div class="cta-btns">
+    <a href="agendamento.html" class="btn btn-gold">◆ Agendar online</a>
+    <a href="#" class="btn-wpp" id="cta-wpp" target="_blank">💬 Falar no WhatsApp</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="nome">Sabrina Castro</div>
+      <div class="prof">Design de Sobrancelhas</div>
     </div>
-  </section>
+    <div class="footer-links"></div>
+    <p class="footer-copy"></p>
+  </div>
+</footer>
 
-  <!-- SOBRE PREVIEW -->
-  <section class="about-preview">
-    <div class="about-grid">
-      <div class="about-image-col">
-        <div class="about-img-frame">
-          <div class="about-img-placeholder">
-            <img src="images/design-personalizado.jpeg" alt="Sabrina – Design Personalizado" onerror="this.style.display='none'" />
-            <div class="img-fallback-text">Sabrina Castro</div>
-          </div>
-          <div class="about-frame-deco"></div>
+<script src="./js/dados.js"></script>
+<script src="./js/global.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const D = getDados();
+
+  // Hero
+  document.getElementById('hero-eyebrow').textContent = D.identidade.heroFrase;
+  document.getElementById('hero-sub').textContent     = D.identidade.heroSub;
+  document.getElementById('bio-curta').textContent    = D.identidade.bioCurta;
+  document.getElementById('nome-sobre').textContent   = D.identidade.nome.split(' ')[0];
+
+  // Hero bg image
+  const wrap = document.getElementById('hero-img-wrap');
+  const heroFoto = D.fotos.find(f => f.tipo === 'hero') || D.fotos[0];
+  if (heroFoto) {
+    const img = document.createElement('img');
+    img.src = heroFoto.src;
+    img.alt = 'Sabrina Castro';
+    img.style.cssText = 'width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px;';
+    wrap.appendChild(img);
+    document.querySelector('.hero-bg').style.backgroundImage = `url('${heroFoto.src}')`;
+  } else {
+    wrap.innerHTML = '<div style="width:100%;aspect-ratio:3/4;background:var(--bege);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--gold-soft)">📷</div>';
+  }
+
+  // Serviços
+  const grid = document.getElementById('services-grid');
+  const ativos = D.servicos.filter(s => s.ativo);
+  ativos.forEach((s, i) => {
+    const preco = s.temPromo ? s.precoPromo : s.preco;
+    const featured = i === 1 ? 'featured' : '';
+    grid.innerHTML += `
+      <div class="svc-card ${featured} reveal">
+        <div class="svc-icon">${s.emoji}</div>
+        <h3>${s.nome}</h3>
+        <p>${s.desc.substring(0,90)}...</p>
+        <div class="svc-price">
+          ${s.temPromo ? `<span class="price-old">R$${s.preco}</span>` : ''}
+          <span class="price-promo">R$${preco}</span>
         </div>
-      </div>
-      <div class="about-text-col">
-        <p class="section-eyebrow">Sobre a Designer</p>
-        <h2 class="section-title">Olá, sou <em>Sabrina</em></h2>
-        <p class="about-bio">
-          Tenho 20 anos e encontrei no design de sobrancelhas a minha verdadeira paixão.
-          Minha trajetória na área da beleza começou em 2021, através de cursos profissionalizantes,
-          até que em 2022 me especializei em design de sobrancelhas.
-        </p>
-        <p class="about-bio">
-          Hoje, vejo cada atendimento como uma oportunidade de transformar autoestima e realçar
-          a beleza natural de cada cliente com técnica, cuidado e profissionalismo.
-        </p>
-        <a href="portfolio.html" class="btn btn-text">Ver meu portfólio →</a>
-      </div>
-    </div>
-  </section>
+        <a href="agendamento.html?servico=${s.slug}" class="btn ${featured ? 'btn-outline' : 'btn-marrom'}" style="font-size:.68rem;padding:.55rem 1.2rem">Agendar</a>
+      </div>`;
+  });
 
-  <!-- SERVICES PREVIEW -->
-  <section class="services-preview">
-    <p class="section-eyebrow center">Procedimentos</p>
-    <h2 class="section-title center">O que ofereço</h2>
-    <div class="services-grid">
+  // CTA horário
+  const diasAtivos = D.horarios.filter(h => h.ativo).map(h => h.dia);
+  const primeiroH  = D.horarios.find(h => h.ativo);
+  const ultimoH    = [...D.horarios].reverse().find(h => h.ativo);
+  if (primeiroH && ultimoH) {
+    document.getElementById('cta-horario').textContent =
+      `${diasAtivos[0]} a ${diasAtivos[diasAtivos.length-1]}, das ${primeiroH.open} às ${ultimoH.close} · ${D.identidade.cidade}`;
+  }
 
-      <div class="service-card">
-        <div class="service-icon">✨</div>
-        <h3>Design Personalizado</h3>
-        <p>Adaptado ao seu rosto, respeitando linhas naturais.</p>
-        <div class="service-price">
-          <span class="price-old">R$45</span>
-          <span class="price-promo">R$40</span>
-        </div>
-        <a href="agendamento.html" class="btn btn-small">Agendar</a>
-      </div>
-
-      <div class="service-card featured">
-        <div class="service-icon">🤍</div>
-        <h3>Design com Henna</h3>
-        <p>Mais definição, efeito marcado e maior durabilidade.</p>
-        <div class="service-price">
-          <span class="price-old">R$65</span>
-          <span class="price-promo">R$60</span>
-        </div>
-        <a href="agendamento.html" class="btn btn-small">Agendar</a>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">✨</div>
-        <h3>Design com Tintura</h3>
-        <p>Intensidade na cor com acabamento sofisticado e natural.</p>
-        <div class="service-price">
-          <span class="price-old">R$65</span>
-          <span class="price-promo">R$60</span>
-        </div>
-        <a href="agendamento.html" class="btn btn-small">Agendar</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="logo-name">Sabrina Castro</span>
-        <span class="logo-sub">Design de Sobrancelhas</span>
-      </div>
-      <div class="footer-links">
-        <a href="portfolio.html">Portfólio</a>
-        <a href="agendamento.html">Agendamento</a>
-        <a href="https://wa.me/5547992842082" target="_blank">WhatsApp</a>
-      </div>
-      <p class="footer-copy">© 2025 Sabrina Castro · Todos os direitos reservados</p>
-    </div>
-  </footer>
-
-  <script src="global.js"></script>
+  // WPP
+  document.getElementById('cta-wpp').href = `https://wa.me/${D.contato.whatsapp}?text=${encodeURIComponent(D.contato.wppMsg)}`;
+});
+</script>
 </body>
 </html>

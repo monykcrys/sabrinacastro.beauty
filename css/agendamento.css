@@ -1,0 +1,115 @@
+/* ================================================================
+   AGENDAMENTO.CSS — Formulário de agendamento
+   ================================================================ */
+
+.booking-section { padding: 5rem 3rem 7rem; background: var(--bege-claro); }
+.booking-container {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.45fr 1fr; gap: 4rem; align-items: start;
+}
+
+/* FORM */
+.form-card {
+  background: var(--white); border: 1px solid rgba(212,175,55,.18);
+  border-radius: 8px; padding: 2.5rem;
+}
+.form-card h2 {
+  font-family: var(--serif); font-size: 1.55rem; font-weight: 400;
+  color: var(--marrom); margin-bottom: 2rem;
+  padding-bottom: 1.2rem; border-bottom: 1px solid rgba(212,175,55,.18);
+}
+
+.discount-bar {
+  background: linear-gradient(135deg, rgba(212,175,55,.06), rgba(234,219,193,.3));
+  border: 1px dashed rgba(212,175,55,.38); border-radius: var(--radius);
+  padding: 1.2rem 1.5rem; margin-bottom: 2rem;
+}
+.discount-bar label { display: block; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--marrom2); margin-bottom: .7rem; }
+.discount-row { display: flex; gap: .5rem; }
+.discount-row input {
+  flex: 1; padding: .65rem 1rem; border: 1px solid rgba(212,175,55,.35);
+  border-radius: var(--radius); background: var(--white); font-size: .88rem;
+  color: var(--text); outline: none; transition: border-color var(--transition);
+}
+.discount-row input:focus { border-color: var(--gold); }
+.discount-row button {
+  padding: .65rem 1.2rem; background: var(--gold); border: none;
+  border-radius: var(--radius); font-size: .7rem; letter-spacing: .1em;
+  text-transform: uppercase; font-weight: 700; color: var(--dark); cursor: pointer; transition: filter var(--transition);
+}
+.discount-row button:hover { filter: brightness(1.1); }
+#discount-msg { font-size: .76rem; margin-top: .5rem; min-height: 1rem; }
+#discount-msg.ok  { color: #27ae60; }
+#discount-msg.err { color: #c0392b; }
+
+.field { margin-bottom: 1.2rem; }
+.field label { display: block; font-size: .67rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-light); margin-bottom: .42rem; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: .78rem 1rem; border: 1.5px solid rgba(140,98,57,.22);
+  border-radius: var(--radius); background: var(--bege-claro); font-size: .9rem;
+  color: var(--text); outline: none; transition: all var(--transition);
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--gold); background: var(--white);
+}
+.field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238C6239' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer;
+}
+.field textarea { resize: vertical; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.price-summary {
+  background: linear-gradient(135deg, var(--marrom) 0%, var(--marrom2) 100%);
+  border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem;
+}
+.price-line { display: flex; justify-content: space-between; padding: .42rem 0; font-size: .84rem; color: var(--bege); }
+.price-line + .price-line { border-top: 1px solid rgba(255,255,255,.09); }
+.price-line.total { font-family: var(--serif); font-size: 1.3rem; color: var(--gold-soft); font-weight: bold; padding-top: .75rem; margin-top: .2rem; border-top: 1px solid rgba(212,175,55,.3) !important; }
+.price-line.desc-line span:last-child { color: var(--gold-soft); }
+
+.btn-full { width: 100%; justify-content: center; }
+
+.wpp-alt { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(212,175,55,.14); text-align: center; }
+.wpp-alt p { font-size: .8rem; color: var(--text-light); margin-bottom: .75rem; }
+
+/* INFO CARDS */
+.info-col { display: flex; flex-direction: column; gap: 1.25rem; position: sticky; top: 5.5rem; }
+.info-card {
+  background: var(--white); border: 1px solid rgba(212,175,55,.18);
+  border-radius: 8px; padding: 1.5rem;
+}
+.info-card h3 { font-family: var(--serif); font-size: 1.05rem; color: var(--marrom); margin-bottom: .75rem; }
+.info-card p  { font-size: .84rem; color: var(--text-mid); line-height: 1.7; }
+
+.sched-grid { display: grid; grid-template-columns: auto 1fr; gap: .3rem 1rem; }
+.sched-grid .d { font-size: .8rem; font-weight: 600; color: var(--marrom); }
+.sched-grid .h { font-size: .8rem; color: var(--text-mid); }
+.sched-grid .off { opacity: .38; }
+
+.mini-svc { display: flex; justify-content: space-between; padding: .42rem 0; font-size: .82rem; color: var(--text-mid); border-bottom: 1px solid rgba(212,175,55,.1); }
+.mini-svc strong { color: var(--gold); font-family: var(--serif); font-size: 1rem; }
+.info-note { font-size: .68rem !important; color: var(--text-light) !important; margin-top: .75rem; font-style: italic; }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(26,17,8,.75); z-index: 999;
+  display: flex; align-items: center; justify-content: center; padding: 1rem;
+  backdrop-filter: blur(5px);
+}
+.modal-box {
+  background: var(--white); border-radius: 10px; padding: 3rem 2.5rem;
+  max-width: 450px; width: 100%; text-align: center;
+  border-top: 4px solid var(--gold); animation: modalIn .3s ease;
+}
+@keyframes modalIn { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+.modal-icon { font-size: 2.2rem; color: var(--gold); margin-bottom: 1rem; }
+.modal-box h3 { font-family: var(--serif); font-size: 1.8rem; color: var(--marrom); margin-bottom: .75rem; }
+.modal-box p  { font-size: .87rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 1.75rem; }
+.modal-box .btn-gold { width: 100%; justify-content: center; margin-bottom: 1rem; }
+.btn-text-link { background: none; border: none; font-size: .78rem; color: var(--text-light); cursor: pointer; text-decoration: underline; }
+.btn-text-link:hover { color: var(--marrom); }
+
+@media (max-width: 900px) { .booking-container { grid-template-columns: 1fr; } .info-col { position: static; } }
+@media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } .form-card { padding: 1.5rem; } }

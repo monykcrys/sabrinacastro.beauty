@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin – Sabrina Castro</title>
+  <link rel="stylesheet" href="./css/admin.css"/>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Sabrina Castro</div>
+    <div class="login-sub">Painel Administrativo</div>
+    <div class="login-title">Entrar</div>
+    <input type="text" id="l-user" placeholder="Usuário" autocomplete="username"/>
+    <input type="password" id="l-pass" placeholder="Senha" autocomplete="current-password"/>
+    <button class="login-btn" onclick="doLogin()">Acessar painel</button>
+    <p id="login-error">❌ Usuário ou senha incorretos</p>
+    <p class="login-hint">Padrão: usuário <strong>sabrina</strong> / senha <strong>admin123</strong></p>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="admin-app">
+  <div class="admin-wrap">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="s-nome" id="sb-nome">Sabrina Castro</div>
+        <div class="s-prof">Painel Admin</div>
+      </div>
+      <nav class="sidebar-menu">
+        <div class="menu-group-label">Conteúdo</div>
+        <button class="menu-btn active" onclick="goTab('identidade',this)"><span class="menu-icon">👤</span> Identidade</button>
+        <button class="menu-btn" onclick="goTab('servicos',this)"><span class="menu-icon">✨</span> Serviços & Preços</button>
+        <button class="menu-btn" onclick="goTab('fotos',this)"><span class="menu-icon">🖼️</span> Fotos & Galeria</button>
+        <button class="menu-btn" onclick="goTab('horarios',this)"><span class="menu-icon">📅</span> Horários</button>
+        <button class="menu-btn" onclick="goTab('cupons',this)"><span class="menu-icon">🏷️</span> Cupons</button>
+        <div class="menu-group-label">Aparência</div>
+        <button class="menu-btn" onclick="goTab('cores',this)"><span class="menu-icon">🎨</span> Cores do Site</button>
+        <button class="menu-btn" onclick="goTab('navegacao',this)"><span class="menu-icon">🔗</span> Navegação / Abas</button>
+        <div class="menu-group-label">Configurações</div>
+        <button class="menu-btn" onclick="goTab('contato',this)"><span class="menu-icon">📞</span> Contato & Links</button>
+        <button class="menu-btn" onclick="goTab('senha',this)"><span class="menu-icon">🔒</span> Alterar Senha</button>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="logout-btn" onclick="doLogout()">🚪 Sair</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+      <!-- ═══ IDENTIDADE ═══ -->
+      <div id="tab-identidade" class="tab-panel active">
+        <div class="main-header"><h1>Identidade</h1><p>Nome, bio, localização e textos do site.</p></div>
+        <div class="stats-row">
+          <div class="stat-tile"><div class="n" id="st-servicos">3</div><div class="l">Serviços ativos</div></div>
+          <div class="stat-tile"><div class="n" id="st-fotos">0</div><div class="l">Fotos</div></div>
+          <div class="stat-tile"><div class="n" id="st-cupons">0</div><div class="l">Cupons ativos</div></div>
+          <div class="stat-tile"><div class="n" id="st-dias">5</div><div class="l">Dias de atendimento</div></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h2>👤 Dados principais</h2></div>
+          <div class="field-row">
+            <div class="field"><label>Nome completo</label><input type="text" id="i-nome" placeholder="Sabrina Castro"/></div>
+            <div class="field"><label>Profissão / subtítulo</label><input type="text" id="i-prof" placeholder="Designer de Sobrancelhas"/></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Frase do Hero (topo)</label><input type="text" id="i-hero-frase" placeholder="Arte em cada fio"/></div>
+            <div class="field"><label>Cidade / Estado</label><input type="text" id="i-cidade" placeholder="Joinville, SC"/></div>
+          </div>
+          <div class="field"><label>Subtítulo do Hero</label><textarea id="i-hero-sub" rows="2"></textarea></div>
+          <div class="field"><label>Endereço (enviado após agendamento)</label><input type="text" id="i-endereco"/></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h2>📝 Biografia</h2></div>
+          <div class="field"><label>Bio curta (home)</label><textarea id="i-bio-curta" rows="3"></textarea></div>
+          <div class="field"><label>Bio completa (portfólio)</label><textarea id="i-bio-longa" rows="5"></textarea></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-save" onclick="salvarIdentidade()">💾 Salvar identidade</button>
+          <a href="index.html" target="_blank"><button class="btn-preview">👁 Ver site</button></a>
+        </div>
+      </div>
+
+      <!-- ═══ SERVIÇOS ═══ -->
+      <div id="tab-servicos" class="tab-panel">
+        <div class="main-header"><h1>Serviços & Preços</h1><p>Adicione, edite ou remova serviços. O site se atualiza automaticamente.</p></div>
+        <div id="svc-lista"></div>
+        <div class="btn-row">
+          <button class="btn-add" onclick="addServico()">＋ Adicionar serviço</button>
+          <button class="btn-save" onclick="salvarServicos()">💾 Salvar serviços</button>
+        </div>
+      </div>
+
+      <!-- ═══ FOTOS ═══ -->
+      <div id="tab-fotos" class="tab-panel">
+        <div class="main-header"><h1>Fotos & Galeria</h1><p>Adicione fotos, defina o tipo (hero, sobre, galeria) e arraste para reordenar.</p></div>
+        <div class="card">
+          <div class="card-header"><h2>📂 Gerenciar fotos</h2><button class="btn-add" onclick="addFoto()">＋ Adicionar foto</button></div>
+          <div class="info-box" style="margin-bottom:1.25rem">
+            <strong>Como funciona:</strong> Clique em "Adicionar foto" → escolha a imagem → defina o nome e o tipo:<br/>
+            • <strong>hero</strong> = fundo da tela inicial<br/>
+            • <strong>sobre</strong> = foto do card "Sobre mim"<br/>
+            • <strong>galeria</strong> = aparece na galeria do portfólio<br/>
+            • <strong>serviço</strong> = foto de um procedimento específico (informe o slug)
+          </div>
+          <div class="foto-grid" id="foto-grid"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-save" onclick="salvarFotos()">💾 Salvar fotos</button>
+        </div>
+      </div>
+
+      <!-- ═══ HORÁRIOS ═══ -->
+      <div id="tab-horarios" class="tab-panel">
+        <div class="main-header"><h1>Horários de Atendimento</h1><p>Ative ou desative dias e ajuste horários.</p></div>
+        <div class="card">
+          <div class="card-header"><h2>📅 Dias & horários</h2></div>
+          <div id="hora-lista"></div>
+        </div>
+        <div class="btn-row"><button class="btn-save" onclick="salvarHorarios()">💾 Salvar horários</button></div>
+      </div>
+
+      <!-- ═══ CUPONS ═══ -->
+      <div id="tab-cupons" class="tab-panel">
+        <div class="main-header"><h1>Cupons de Desconto</h1><p>Crie e gerencie códigos de desconto.</p></div>
+        <div class="card">
+          <div class="card-header"><h2>🏷️ Cupons</h2></div>
+          <div style="display:grid;grid-template-columns:1fr 100px 60px 40px;gap:.75rem;margin-bottom:.5rem;padding:0 .25rem">
+            <span style="font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#8C6239">Código</span>
+            <span style="font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#8C6239">Desconto</span>
+            <span style="font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#8C6239">Ativo</span>
+            <span></span>
+          </div>
+          <div id="cupom-lista"></div>
+          <button class="btn-add" style="margin-top:.75rem" onclick="addCupom()">＋ Novo cupom</button>
+        </div>
+        <div class="btn-row"><button class="btn-save" onclick="salvarCupons()">💾 Salvar cupons</button></div>
+      </div>
+
+      <!-- ═══ CORES ═══ -->
+      <div id="tab-cores" class="tab-panel">
+        <div class="main-header"><h1>Cores do Site</h1><p>Personalize completamente as cores. Clique na cor para abrir o seletor.</p></div>
+        <div class="card">
+          <div class="card-header"><h2>🎨 Paleta de cores</h2></div>
+          <div class="field-row">
+            <div class="field"><label>Cor primária (marrom)</label><div class="color-field"><input type="color" id="c-primaria" oninput="syncColor(this,'c-primaria-hex')"/><input type="text" id="c-primaria-hex" oninput="syncHex(this,'c-primaria')" maxlength="7"/></div></div>
+            <div class="field"><label>Cor secundária</label><div class="color-field"><input type="color" id="c-secundaria" oninput="syncColor(this,'c-secundaria-hex')"/><input type="text" id="c-secundaria-hex" oninput="syncHex(this,'c-secundaria')" maxlength="7"/></div></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Destaque (dourado)</label><div class="color-field"><input type="color" id="c-destaque" oninput="syncColor(this,'c-destaque-hex')"/><input type="text" id="c-destaque-hex" oninput="syncHex(this,'c-destaque')" maxlength="7"/></div></div>
+            <div class="field"><label>Destaque claro</label><div class="color-field"><input type="color" id="c-destaqueClaro" oninput="syncColor(this,'c-destaqueClaro-hex')"/><input type="text" id="c-destaqueClaro-hex" oninput="syncHex(this,'c-destaqueClaro')" maxlength="7"/></div></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Fundo claro</label><div class="color-field"><input type="color" id="c-fundo" oninput="syncColor(this,'c-fundo-hex')"/><input type="text" id="c-fundo-hex" oninput="syncHex(this,'c-fundo')" maxlength="7"/></div></div>
+            <div class="field"><label>Fundo médio</label><div class="color-field"><input type="color" id="c-fundoMedio" oninput="syncColor(this,'c-fundoMedio-hex')"/><input type="text" id="c-fundoMedio-hex" oninput="syncHex(this,'c-fundoMedio')" maxlength="7"/></div></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Cor escura (fundo footer)</label><div class="color-field"><input type="color" id="c-escuro" oninput="syncColor(this,'c-escuro-hex')"/><input type="text" id="c-escuro-hex" oninput="syncHex(this,'c-escuro')" maxlength="7"/></div></div>
+            <div class="field"><label>Texto principal</label><div class="color-field"><input type="color" id="c-textoPrincipal" oninput="syncColor(this,'c-textoPrincipal-hex')"/><input type="text" id="c-textoPrincipal-hex" oninput="syncHex(this,'c-textoPrincipal')" maxlength="7"/></div></div>
+          </div>
+          <div class="field"><label>Texto médio</label><div class="color-field" style="max-width:340px"><input type="color" id="c-textoMedio" oninput="syncColor(this,'c-textoMedio-hex')"/><input type="text" id="c-textoMedio-hex" oninput="syncHex(this,'c-textoMedio')" maxlength="7"/></div></div>
+          <div class="palette-preview" id="palette-preview"></div>
+        </div>
+        <div class="card" style="background:#fffbe6;border-color:rgba(212,175,55,.35)">
+          <div class="card-header"><h2>🔄 Paletas prontas</h2></div>
+          <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+            <button class="btn-add" onclick="aplicarPaleta('original')">Marrom & Dourado (original)</button>
+            <button class="btn-add" onclick="aplicarPaleta('rosa')">Rosa & Nude</button>
+            <button class="btn-add" onclick="aplicarPaleta('preto')">Preto & Dourado</button>
+            <button class="btn-add" onclick="aplicarPaleta('verde')">Verde & Bege</button>
+            <button class="btn-add" onclick="aplicarPaleta('roxo')">Roxo & Rose Gold</button>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-save" onclick="salvarCores()">💾 Salvar cores</button>
+          <button class="btn-preview" onclick="previewCores()">👁 Pré-visualizar</button>
+        </div>
+      </div>
+
+      <!-- ═══ NAVEGAÇÃO ═══ -->
+      <div id="tab-navegacao" class="tab-panel">
+        <div class="main-header"><h1>Navegação / Abas</h1><p>Adicione, remova ou renomeie as abas do menu. Você pode criar páginas novas.</p></div>
+        <div class="card">
+          <div class="card-header"><h2>🔗 Itens do menu</h2></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 80px 80px 40px;gap:.75rem;margin-bottom:.5rem;padding:0 .25rem">
+            <span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#8C6239">Label</span>
+            <span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#8C6239">Arquivo (href)</span>
+            <span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#8C6239">Visível</span>
+            <span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#8C6239">Destaque</span>
+            <span></span>
+          </div>
+          <div id="nav-lista"></div>
+          <button class="btn-add" style="margin-top:.75rem" onclick="addAba()">＋ Nova aba</button>
+        </div>
+        <div class="btn-row"><button class="btn-save" onclick="salvarNavegacao()">💾 Salvar navegação</button></div>
+      </div>
+
+      <!-- ═══ CONTATO ═══ -->
+      <div id="tab-contato" class="tab-panel">
+        <div class="main-header"><h1>Contato & Links</h1><p>WhatsApp, e-mail e redes sociais.</p></div>
+        <div class="card">
+          <div class="card-header"><h2>📞 WhatsApp</h2></div>
+          <div class="field-row">
+            <div class="field"><label>Número (com DDI, sem espaços)</label><input type="tel" id="ct-wpp" placeholder="5547999999999"/></div>
+            <div class="field"><label>Mensagem padrão</label><input type="text" id="ct-wpp-msg" placeholder="Olá! Gostaria de agendar."/></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h2>📧 Notificações por E-mail (EmailJS)</h2></div>
+          <div class="field-row-3">
+            <div class="field"><label>Public Key</label><input type="text" id="ct-ejs-key" placeholder="sua_public_key"/></div>
+            <div class="field"><label>Service ID</label><input type="text" id="ct-ejs-svc" placeholder="seu_service_id"/></div>
+            <div class="field"><label>Template ID</label><input type="text" id="ct-ejs-tmpl" placeholder="seu_template_id"/></div>
+          </div>
+          <div class="info-box">
+            Crie conta grátis em <strong>emailjs.com</strong> → conecte seu Gmail → crie um template → cole as credenciais acima. Você receberá um e-mail a cada agendamento.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h2>📱 Redes Sociais</h2></div>
+          <div class="field-row">
+            <div class="field"><label>Instagram (URL completa)</label><input type="url" id="ct-ig" placeholder="https://instagram.com/seuuser"/></div>
+            <div class="field"><label>TikTok (URL completa)</label><input type="url" id="ct-tt" placeholder="https://tiktok.com/@seuuser"/></div>
+          </div>
+        </div>
+        <div class="btn-row"><button class="btn-save" onclick="salvarContato()">💾 Salvar configurações</button></div>
+      </div>
+
+      <!-- ═══ SENHA ═══ -->
+      <div id="tab-senha" class="tab-panel">
+        <div class="main-header"><h1>Alterar Senha</h1><p>Troque a senha de acesso ao painel.</p></div>
+        <div class="card" style="max-width:420px">
+          <div class="card-header"><h2>🔒 Nova senha</h2></div>
+          <div class="field"><label>Senha atual</label><input type="password" id="s-atual"/></div>
+          <div class="field"><label>Nova senha</label><input type="password" id="s-nova"/></div>
+          <div class="field"><label>Confirmar nova senha</label><input type="password" id="s-conf"/></div>
+          <div class="btn-row"><button class="btn-save" onclick="alterarSenha()">🔒 Alterar senha</button></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="./js/dados.js"></script>
+<script>
+// ================================================================
+// ADMIN.JS — lógica completa do painel
+// ================================================================
+
+const AUTH_KEY = 'sabrina_admin_auth_v2';
+let D = getDados();
+
+// ── AUTH ──────────────────────────────────────────────────────
+function doLogin() {
+  const u = document.getElementById('l-user').value.trim();
+  const p = document.getElementById('l-pass').value;
+  if (u === D.auth.user && p === D.auth.pass) {
+    localStorage.setItem(AUTH_KEY, '1');
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'block';
+    initAdmin();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+function doLogout() { localStorage.removeItem(AUTH_KEY); location.reload(); }
+document.getElementById('l-pass').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
+if (localStorage.getItem(AUTH_KEY)==='1') {
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('admin-app').style.display='block';
+  document.addEventListener('DOMContentLoaded', initAdmin);
+}
+
+// ── TABS ──────────────────────────────────────────────────────
+function goTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.menu-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+function initAdmin() {
+  D = getDados();
+  fillIdentidade();
+  renderServicos();
+  renderFotos();
+  renderHorarios();
+  renderCupons();
+  fillCores();
+  renderNavegacao();
+  fillContato();
+  updateStats();
+  document.getElementById('sb-nome').textContent = D.identidade.nome;
+}
+
+function updateStats() {
+  document.getElementById('st-servicos').textContent = D.servicos.filter(s=>s.ativo).length;
+  document.getElementById('st-fotos').textContent    = D.fotos.length;
+  document.getElementById('st-cupons').textContent   = D.cupons.filter(c=>c.ativo).length;
+  document.getElementById('st-dias').textContent     = D.horarios.filter(h=>h.ativo).length;
+}
+
+// ── IDENTIDADE ────────────────────────────────────────────────
+function fillIdentidade() {
+  const i = D.identidade;
+  document.getElementById('i-nome').value       = i.nome;
+  document.getElementById('i-prof').value       = i.profissao;
+  document.getElementById('i-hero-frase').value = i.heroFrase;
+  document.getElementById('i-hero-sub').value   = i.heroSub;
+  document.getElementById('i-cidade').value     = i.cidade;
+  document.getElementById('i-endereco').value   = i.endereco;
+  document.getElementById('i-bio-curta').value  = i.bioCurta;
+  document.getElementById('i-bio-longa').value  = i.bioLonga;
+}
+function salvarIdentidade() {
+  D.identidade = {
+    nome:      document.getElementById('i-nome').value.trim(),
+    profissao: document.getElementById('i-prof').value.trim(),
+    heroFrase: document.getElementById('i-hero-frase').value.trim(),
+    heroSub:   document.getElementById('i-hero-sub').value.trim(),
+    cidade:    document.getElementById('i-cidade').value.trim(),
+    endereco:  document.getElementById('i-endereco').value.trim(),
+    bioCurta:  document.getElementById('i-bio-curta').value.trim(),
+    bioLonga:  document.getElementById('i-bio-longa').value.trim(),
+  };
+  setDados(D);
+  document.getElementById('sb-nome').textContent = D.identidade.nome;
+  toast('✅ Identidade salva!','success');
+}
+
+// ── SERVIÇOS ──────────────────────────────────────────────────
+function renderServicos() {
+  const el = document.getElementById('svc-lista');
+  el.innerHTML = '';
+  D.servicos.forEach((s,i) => {
+    const div = document.createElement('div');
+    div.className = 'svc-editor';
+    div.innerHTML = `
+      <div class="svc-editor-head">
+        <span class="svc-editor-title">${s.emoji} ${s.nome}</span>
+        <button class="btn-danger" onclick="delServico(${i})">Remover</button>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Emoji</label><input type="text" value="${s.emoji}" oninput="D.servicos[${i}].emoji=this.value;this.closest('.svc-editor').querySelector('.svc-editor-title').textContent=this.value+' '+D.servicos[${i}].nome" style="font-size:1.4rem"/></div>
+        <div class="field"><label>Nome</label><input type="text" value="${s.nome}" oninput="D.servicos[${i}].nome=this.value;this.closest('.svc-editor').querySelector('.svc-editor-title').textContent=D.servicos[${i}].emoji+' '+this.value"/></div>
+      </div>
+      <div class="field"><label>Slug (identificador único, sem espaços)</label><input type="text" value="${s.slug}" oninput="D.servicos[${i}].slug=this.value.toLowerCase().replace(/\s+/g,'_')"/></div>
+      <div class="field"><label>Descrição</label><textarea oninput="D.servicos[${i}].desc=this.value">${s.desc}</textarea></div>
+      <div class="field-row-3">
+        <div class="field"><label>Preço normal (R$)</label><input type="number" value="${s.preco}" oninput="D.servicos[${i}].preco=+this.value"/></div>
+        <div class="field"><label>Preço promocional (R$)</label><input type="number" value="${s.precoPromo}" oninput="D.servicos[${i}].precoPromo=+this.value"/></div>
+        <div class="field"><label>Mostrar promoção?</label>
+          <select onchange="D.servicos[${i}].temPromo=this.value==='true'">
+            <option value="true" ${s.temPromo?'selected':''}>✅ Sim</option>
+            <option value="false" ${!s.temPromo?'selected':''}>❌ Não</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Foto do serviço (URL ou base64 — carregue na aba Fotos)</label><input type="text" value="${s.foto||''}" oninput="D.servicos[${i}].foto=this.value" placeholder="Deixe em branco para usar o emoji"/></div>
+      <div class="toggle-row">
+        <label class="toggle"><input type="checkbox" ${s.ativo?'checked':''} onchange="D.servicos[${i}].ativo=this.checked;updateStats()"/><span class="toggle-track"></span></label>
+        <span>Serviço visível no site</span>
+      </div>`;
+    el.appendChild(div);
+  });
+}
+function addServico() {
+  D.servicos.push({ id:Date.now(), slug:`servico_${D.servicos.length+1}`, emoji:'✨', nome:'Novo Serviço', desc:'Descrição do serviço...', preco:50, precoPromo:45, temPromo:true, ativo:true, foto:'' });
+  renderServicos();
+}
+function delServico(i) {
+  if (!confirm('Remover este serviço?')) return;
+  D.servicos.splice(i,1);
+  renderServicos();
+  updateStats();
+}
+function salvarServicos() { setDados(D); updateStats(); toast('✅ Serviços salvos!','success'); }
+
+// ── FOTOS ─────────────────────────────────────────────────────
+function renderFotos() {
+  const grid = document.getElementById('foto-grid');
+  grid.innerHTML = '';
+  D.fotos.forEach((f,i) => {
+    const card = document.createElement('div');
+    card.className = 'foto-card';
+    card.innerHTML = `
+      <img class="foto-preview loaded" src="${f.src}" alt="${f.nome}"/>
+      <button class="del-foto" onclick="delFoto(${i})">✕</button>
+      <input class="foto-nome" type="text" value="${f.nome||''}" placeholder="Nome/legenda" oninput="D.fotos[${i}].nome=this.value"/>
+      <div class="field"><label style="font-size:.62rem">Tipo</label>
+        <select oninput="D.fotos[${i}].tipo=this.value">
+          <option value="galeria" ${f.tipo==='galeria'?'selected':''}>Galeria (portfólio)</option>
+          <option value="hero"    ${f.tipo==='hero'?'selected':''}>Hero (tela inicial)</option>
+          <option value="sobre"   ${f.tipo==='sobre'?'selected':''}>Sobre mim</option>
+          <option value="servico" ${f.tipo==='servico'?'selected':''}>Foto de serviço</option>
+        </select>
+      </div>
+      <p style="font-size:.68rem;color:#8C6239;margin-top:.25rem">Se tipo = serviço, cole o slug no campo abaixo:</p>
+      <input class="foto-nome" type="text" value="${f.slug||''}" placeholder="slug do serviço (ex: design_henna)" oninput="D.fotos[${i}].slug=this.value" style="margin-top:.25rem"/>`;
+    grid.appendChild(card);
+  });
+  updateStats();
+}
+function addFoto() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*'; input.multiple = true;
+  input.onchange = e => {
+    Array.from(e.target.files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        D.fotos.push({ src: ev.target.result, nome: file.name.replace(/\.[^.]+$/,''), tipo: 'galeria', slug: '' });
+        renderFotos();
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+  input.click();
+}
+function delFoto(i) {
+  if (!confirm('Remover esta foto?')) return;
+  D.fotos.splice(i,1);
+  renderFotos();
+}
+function salvarFotos() {
+  // Sincroniza fotos de serviço
+  D.fotos.filter(f=>f.tipo==='servico'&&f.slug).forEach(f=>{
+    const svc = D.servicos.find(s=>s.slug===f.slug);
+    if (svc) svc.foto = f.src;
+  });
+  setDados(D);
+  updateStats();
+  toast('✅ Fotos salvas!','success');
+}
+
+// ── HORÁRIOS ──────────────────────────────────────────────────
+function renderHorarios() {
+  const el = document.getElementById('hora-lista');
+  el.innerHTML = '';
+  D.horarios.forEach((h,i) => {
+    el.innerHTML += `
+      <div class="hora-row">
+        <span class="dia-label">${h.dia}</span>
+        <input type="time" value="${h.open}"  onchange="D.horarios[${i}].open=this.value"/>
+        <input type="time" value="${h.close}" onchange="D.horarios[${i}].close=this.value"/>
+        <div class="toggle-row">
+          <label class="toggle"><input type="checkbox" ${h.ativo?'checked':''} onchange="D.horarios[${i}].ativo=this.checked;updateStats()"/><span class="toggle-track"></span></label>
+        </div>
+      </div>`;
+  });
+}
+function salvarHorarios() { setDados(D); updateStats(); toast('✅ Horários salvos!','success'); }
+
+// ── CUPONS ────────────────────────────────────────────────────
+function renderCupons() {
+  const el = document.getElementById('cupom-lista');
+  el.innerHTML = '';
+  D.cupons.forEach((c,i) => {
+    el.innerHTML += `
+      <div class="cupom-row">
+        <input class="code" type="text" value="${c.codigo}" placeholder="CODIGO" oninput="D.cupons[${i}].codigo=this.value.toUpperCase();this.value=this.value.toUpperCase()"/>
+        <input type="number" value="${c.pct}" min="1" max="99" oninput="D.cupons[${i}].pct=+this.value" style="text-align:center"/>
+        <div class="toggle-row" style="justify-content:center">
+          <label class="toggle"><input type="checkbox" ${c.ativo?'checked':''} onchange="D.cupons[${i}].ativo=this.checked;updateStats()"/><span class="toggle-track"></span></label>
+        </div>
+        <button class="btn-danger" style="padding:.4rem .55rem;font-size:.75rem" onclick="delCupom(${i})">✕</button>
+      </div>`;
+  });
+  updateStats();
+}
+function addCupom() { D.cupons.push({codigo:'',pct:10,ativo:true}); renderCupons(); }
+function delCupom(i) { D.cupons.splice(i,1); renderCupons(); }
+function salvarCupons() { setDados(D); updateStats(); toast('✅ Cupons salvos!','success'); }
+
+// ── CORES ─────────────────────────────────────────────────────
+const CAMPOS_COR = ['primaria','secundaria','destaque','destaqueClaro','fundo','fundoMedio','escuro','textoPrincipal','textoMedio'];
+const PALETAS = {
+  original: { primaria:'#6B4A2E', secundaria:'#8C6239', destaque:'#D4AF37', destaqueClaro:'#E6C98A', fundo:'#F5EFE3', fundoMedio:'#EADBC1', escuro:'#1a1108', textoPrincipal:'#2e1f0d', textoMedio:'#5a3e1b' },
+  rosa:     { primaria:'#8B4A62', secundaria:'#A6617D', destaque:'#E8A4B8', destaqueClaro:'#F2C8D6', fundo:'#FDF5F7', fundoMedio:'#F5E0E7', escuro:'#2d1020', textoPrincipal:'#3d1a2a', textoMedio:'#7a3d55' },
+  preto:    { primaria:'#1a1a1a', secundaria:'#333333', destaque:'#D4AF37', destaqueClaro:'#E6C98A', fundo:'#F8F8F5', fundoMedio:'#EDEDEA', escuro:'#0a0a0a', textoPrincipal:'#111111', textoMedio:'#444444' },
+  verde:    { primaria:'#3D5A40', secundaria:'#567A5A', destaque:'#A8C5A0', destaqueClaro:'#C8DCC4', fundo:'#F4F8F3', fundoMedio:'#E4EDDF', escuro:'#1a2e1c', textoPrincipal:'#1f3322', textoMedio:'#4a6b50' },
+  roxo:     { primaria:'#5C3370', secundaria:'#7B4A93', destaque:'#C9A0B8', destaqueClaro:'#E2C8D8', fundo:'#FAF5FC', fundoMedio:'#F0E5F5', escuro:'#200a2e', textoPrincipal:'#2e0f42', textoMedio:'#6b3d80' },
+};
+function fillCores() {
+  const c = D.cores;
+  CAMPOS_COR.forEach(k => {
+    const col = document.getElementById('c-'+k);
+    const hex = document.getElementById('c-'+k+'-hex');
+    if (col) col.value = c[k] || '#000000';
+    if (hex) hex.value = c[k] || '#000000';
+  });
+  atualizarPaletaPreview();
+}
+function syncColor(input, hexId) {
+  document.getElementById(hexId).value = input.value;
+  const key = input.id.replace('c-','');
+  D.cores[key] = input.value;
+  atualizarPaletaPreview();
+}
+function syncHex(input, colorId) {
+  const v = input.value;
+  if (/^#[0-9A-Fa-f]{6}$/.test(v)) {
+    document.getElementById(colorId).value = v;
+    const key = colorId.replace('c-','');
+    D.cores[key] = v;
+    atualizarPaletaPreview();
+  }
+}
+function aplicarPaleta(nome) {
+  const p = PALETAS[nome];
+  if (!p) return;
+  Object.assign(D.cores, p);
+  fillCores();
+  toast('🎨 Paleta aplicada! Clique em Salvar cores.','info');
+}
+function atualizarPaletaPreview() {
+  const prev = document.getElementById('palette-preview');
+  if (!prev) return;
+  const labels = ['Primária','Secundária','Destaque','Dest. Claro','Fundo','F. Médio','Escuro','Texto','T. Médio'];
+  prev.innerHTML = '';
+  CAMPOS_COR.forEach((k,i) => {
+    const cor = D.cores[k] || '#ccc';
+    prev.innerHTML += `<div class="palette-swatch" style="background:${cor}" title="${labels[i]}">${labels[i].substring(0,4)}</div>`;
+  });
+}
+function previewCores() {
+  aplicarCores(D.cores);
+  toast('👁 Prévia aplicada nesta página!','info');
+}
+function aplicarCores(c) {
+  if (!c) return;
+  const r = document.documentElement.style;
+  r.setProperty('--marrom',    c.primaria      || '#6B4A2E');
+  r.setProperty('--marrom2',   c.secundaria    || '#8C6239');
+  r.setProperty('--gold',      c.destaque      || '#D4AF37');
+  r.setProperty('--gold-soft', c.destaqueClaro || '#E6C98A');
+  r.setProperty('--bege-claro',c.fundo         || '#F5EFE3');
+  r.setProperty('--bege',      c.fundoMedio    || '#EADBC1');
+  r.setProperty('--dark',      c.escuro        || '#1a1108');
+  r.setProperty('--text',      c.textoPrincipal|| '#2e1f0d');
+  r.setProperty('--text-mid',  c.textoMedio    || '#5a3e1b');
+}
+function salvarCores() { setDados(D); aplicarCores(D.cores); toast('✅ Cores salvas!','success'); }
+
+// ── NAVEGAÇÃO ─────────────────────────────────────────────────
+function renderNavegacao() {
+  const el = document.getElementById('nav-lista');
+  el.innerHTML = '';
+  D.abas.forEach((a,i) => {
+    const div = document.createElement('div');
+    div.className = 'aba-editor';
+    div.innerHTML = `
+      <div><label>Label</label><input type="text" value="${a.label}" oninput="D.abas[${i}].label=this.value"/></div>
+      <div><label>Arquivo (href)</label><input type="text" value="${a.href}" oninput="D.abas[${i}].href=this.value" placeholder="pagina.html"/></div>
+      <div style="display:flex;flex-direction:column;gap:.75rem">
+        <div class="toggle-row"><label class="toggle"><input type="checkbox" ${a.visivel?'checked':''} onchange="D.abas[${i}].visivel=this.checked"/><span class="toggle-track"></span></label><span style="font-size:.8rem">Visível</span></div>
+        <div class="toggle-row"><label class="toggle"><input type="checkbox" ${a.destaque?'checked':''} onchange="D.abas[${i}].destaque=this.checked"/><span class="toggle-track"></span></label><span style="font-size:.8rem">Destaque</span></div>
+      </div>
+      <button class="btn-danger" style="padding:.4rem .55rem;font-size:.75rem;height:fit-content;align-self:center" onclick="delAba(${i})">✕</button>`;
+    el.appendChild(div);
+  });
+}
+function addAba()  { D.abas.push({id:'nova_'+Date.now(),label:'Nova Página',href:'nova.html',visivel:true,destaque:false}); renderNavegacao(); }
+function delAba(i) { if(!confirm('Remover esta aba?'))return; D.abas.splice(i,1); renderNavegacao(); }
+function salvarNavegacao() { setDados(D); toast('✅ Navegação salva!','success'); }
+
+// ── CONTATO ───────────────────────────────────────────────────
+function fillContato() {
+  const c = D.contato;
+  document.getElementById('ct-wpp').value     = c.whatsapp    || '';
+  document.getElementById('ct-wpp-msg').value = c.wppMsg      || '';
+  document.getElementById('ct-ejs-key').value = c.emailjsKey  || '';
+  document.getElementById('ct-ejs-svc').value = c.emailjsSvc  || '';
+  document.getElementById('ct-ejs-tmpl').value= c.emailjsTmpl || '';
+  document.getElementById('ct-ig').value      = c.instagram   || '';
+  document.getElementById('ct-tt').value      = c.tiktok      || '';
+}
+function salvarContato() {
+  D.contato = {
+    whatsapp:    document.getElementById('ct-wpp').value.trim(),
+    wppMsg:      document.getElementById('ct-wpp-msg').value.trim(),
+    emailjsKey:  document.getElementById('ct-ejs-key').value.trim(),
+    emailjsSvc:  document.getElementById('ct-ejs-svc').value.trim(),
+    emailjsTmpl: document.getElementById('ct-ejs-tmpl').value.trim(),
+    instagram:   document.getElementById('ct-ig').value.trim(),
+    tiktok:      document.getElementById('ct-tt').value.trim(),
+  };
+  setDados(D);
+  toast('✅ Contato salvo!','success');
+}
+
+// ── SENHA ─────────────────────────────────────────────────────
+function alterarSenha() {
+  const atual = document.getElementById('s-atual').value;
+  const nova  = document.getElementById('s-nova').value;
+  const conf  = document.getElementById('s-conf').value;
+  if (atual !== D.auth.pass)  { toast('❌ Senha atual incorreta','error'); return; }
+  if (nova.length < 6)        { toast('❌ Senha nova muito curta (mín. 6 caracteres)','error'); return; }
+  if (nova !== conf)          { toast('❌ As senhas não coincidem','error'); return; }
+  D.auth.pass = nova;
+  setDados(D);
+  document.getElementById('s-atual').value = document.getElementById('s-nova').value = document.getElementById('s-conf').value = '';
+  toast('✅ Senha alterada com sucesso!','success');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function toast(msg, type='success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + type;
+  setTimeout(() => { el.className=''; }, 3800);
+}
+</script>
+</body>
+</html>
